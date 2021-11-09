@@ -24,11 +24,20 @@ function Current() {
           preasure: data.main.pressure,
           city: data.name,
           country: data.sys.country,
-          error: null
+          error: null,
+          isLoading: false
         });
       })
       .catch(error => console.log(error));
   }, []);
+
+  if (current.isLoading) {
+    return(
+      <div className="box-border w-full p-8 rounded-md shadow-lg bg-gray-500 bg-opacity-25 text-white text-xl text-center">
+        Loading...
+      </div>
+    );
+  }
 
   if (!current) {
     return(

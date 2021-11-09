@@ -21,6 +21,14 @@ function Forecast() {
       .catch(error => console.log(error));
   }, []);
 
+  if (false) {
+    return(
+      <div className="col-span-2 box-border py-8 w-full rounded-md shadow-lg bg-gray-500 bg-opacity-25 text-white text-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   if (!current.list) {
     return(
       <div className="col-span-2 box-border py-8 w-full rounded-md shadow-lg bg-gray-500 bg-opacity-25 text-white text-center">
