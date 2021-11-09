@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import AppContext from '../context/AppContext';
+import UserContext from '../context/UserContext';
 import { API_KEY } from '../key';
 
 function Forecast() {
   const [current, setCurrent] = useState([]);
-  const data = useContext(AppContext);
+  const [loading, setLoading] = useState(true);
 
-  const city = data.city;
-  const country = data.country;
+  const locaction = useContext(UserContext);
+  const city = locaction.city;
+  const country = locaction.country;
 
   const API_URL = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country},&APPID=${API_KEY}&cnt=5&units=metric`;
 
@@ -15,13 +16,13 @@ function Forecast() {
     fetch(API_URL)
       .then(response => response.json())
       .then(data => {
-        //console.log(data);
         setCurrent(data);
+        setLoading(false);
       })
       .catch(error => console.log(error));
-  }, []);
+  });
 
-  if (false) {
+  if (loading) {
     return(
       <div className="col-span-2 box-border py-8 w-full rounded-md shadow-lg bg-gray-500 bg-opacity-25 text-white text-center">
         <p>Loading...</p>

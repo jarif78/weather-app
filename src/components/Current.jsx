@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import AppContext from '../context/AppContext';
+import UserContext from '../context/UserContext';
 import { API_KEY } from '../key';
 
 function Current() {
   const [current, setCurrent] = useState([]);
-  const data = useContext(AppContext);
+  const [loading, setLoading] = useState(true);
 
-  const city = data.city;
-  const country = data.country;
+  const location = useContext(UserContext);
+  const city = location.city;
+  const country = location.country;
 
   const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country},&APPID=${API_KEY}&units=metric`;
 
@@ -24,14 +25,14 @@ function Current() {
           preasure: data.main.pressure,
           city: data.name,
           country: data.sys.country,
-          error: null,
-          isLoading: false
+          error: null
         });
+        setLoading(false);
       })
       .catch(error => console.log(error));
-  }, []);
+  });
 
-  if (current.isLoading) {
+  if (loading) {
     return(
       <div className="box-border w-full p-8 rounded-md shadow-lg bg-gray-500 bg-opacity-25 text-white text-xl text-center">
         Loading...
