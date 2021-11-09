@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import Current from './components/Current';
+import Locations from './components/Locations';
+import Forecast from './components/Forecast';
+import AppContext from './context/AppContext';
 
 function App() {
+  const appData = {
+    city: 'moscow',
+    country: 'ru'
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value = { appData }>
+      <div className="container mx-auto lg:w-1/2">
+        <h1 className="my-10 text-center text-white font-bold text-5xl">WEATHER-APP</h1>
+        <div className="grid grid-cols-2 gap-8">
+          <Current />
+          <Locations />
+          <Forecast />
+        </div>
+      </div>
+    </AppContext.Provider>
   );
 }
 
