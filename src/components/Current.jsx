@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import AppContext from '../context/AppContext';
-import { API_KEY } from '../env';
+import { API_KEY } from '../key';
 
 function Current() {
   const [current, setCurrent] = useState([]);
