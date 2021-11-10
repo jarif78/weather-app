@@ -5,22 +5,24 @@ import { API_KEY } from '../key';
 function Forecast() {
   const [current, setCurrent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fail, setFail] = useState(false);
 
-  const locaction = useContext(UserContext);
-  const city = locaction.city;
-  const country = locaction.country;
-
-  const API_URL = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country},&APPID=${API_KEY}&cnt=5&units=metric`;
+  const location = useContext(UserContext);
 
   useEffect(() => {
+    const API_URL = `https://api.openweathermap.org/data/2.5/forecast?q=${location.city},${location.country},&APPID=${API_KEY}&cnt=5&units=metric`;
+
     fetch(API_URL)
       .then(response => response.json())
       .then(data => {
         setCurrent(data);
         setLoading(false);
       })
-      .catch(error => console.log(error));
-  });
+      .catch(error => {
+        console.log(error);
+        setFail(true);
+      });
+  },[location]);
 
   if (loading) {
     return(
@@ -30,7 +32,7 @@ function Forecast() {
     );
   }
 
-  if (!current.list) {
+  if (!current.list || fail) {
     return(
       <div className="col-span-2 box-border py-8 w-full rounded-md shadow-lg bg-gray-500 bg-opacity-25 text-white text-center">
         <p>No se pudo recuperar datos del clima</p>

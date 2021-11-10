@@ -13,10 +13,10 @@ function App() {
   const getCurrentLocation = async () => {
     await axios.get('https://geolocation-db.com/json/')
         .then((res) => {
-            axios.get("http://api.openweathermap.org/data/2.5/weather?lat="+res.data.latitude+"&lon="+res.data.longitude+"&APPID=5b6d7711e2a98068bef12e795b6c97f5")
-            .then((res) => {
-                console.log(res.data);
-            })
+          setLocation({
+            city: res.data.city,
+            country: res.data.country_code
+          });
         });
   }
 
